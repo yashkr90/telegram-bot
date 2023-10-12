@@ -1,25 +1,22 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
+import { PassportModule } from '@nestjs/passport';
 import { AppService } from './app.service';
 import { TelegramController } from './telegram/telegram.controller';
 import { TelegramModule } from './telegram/telegram.module';
-import { SubscriptionController } from './subscription/subscription.controller';
-import { SubscriptionService } from './subscription/subscription.service';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { SubscriptionModule } from './subscription/subscription.module';
+
 // import 'dotenv/config';
 
 console.log(process.env.MONGO_URL);
 
-
 @Module({
   imports: [
-    
     ConfigModule.forRoot({
       isGlobal: true,
       // envFilePath: '.env',
-      
     }),
     // MongooseModule.forRoot(process.env.MONGO_URL),
     MongooseModule.forRootAsync({
@@ -31,6 +28,8 @@ console.log(process.env.MONGO_URL);
     }),
     SubscriptionModule,
     TelegramModule,
+
+    PassportModule.register({ session: true }),
   ],
   controllers: [
     AppController,
