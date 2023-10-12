@@ -21,7 +21,7 @@ console.log(process.env.MONGO_URL);
     // MongooseModule.forRoot(process.env.MONGO_URL),
     MongooseModule.forRootAsync({
       useFactory: () => ({
-        uri: 'mongodb://127.0.0.1:27017/telegrambot', // Use the environment variable
+        uri: process.env.MONGO_URL, // Use the environment variable
         useNewUrlParser: true,
         useUnifiedTopology: true,
       }),

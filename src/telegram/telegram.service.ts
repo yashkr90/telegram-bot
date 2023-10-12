@@ -3,7 +3,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { SubscriptionService } from 'src/subscription/subscription.service';
 import { getWeather } from './weather/weather';
 
-const token = '6475725337:AAEelji8YsVkSZ4N3FywIu56e7i-piqWni8';
+
 
 @Injectable()
 export class TelegramService {
@@ -12,7 +12,7 @@ export class TelegramService {
 
   private readonly bot: any;
   constructor() {
-    this.bot = new TelegramBot(token, { polling: true });
+    this.bot = new TelegramBot(process.env.TELEGRAM_TOKEN, { polling: true });
     this.registerCommandHandlers();
   }
   private registerCommandHandlers() {
