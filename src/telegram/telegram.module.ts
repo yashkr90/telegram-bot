@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module,OnModuleInit  } from '@nestjs/common';
 import { TelegramService } from './telegram.service';
 import { SubscriptionService } from 'src/subscription/subscription.service';
 import { SubscriptionModule } from 'src/subscription/subscription.module';
@@ -10,4 +10,11 @@ import { SubscriptionModule } from 'src/subscription/subscription.module';
   
   // controllers:[]
 })
-export class TelegramModule {}
+export class TelegramModule implements OnModuleInit {
+
+  constructor(private readonly telegramService: TelegramService) {}
+
+  onModuleInit() {
+    this.telegramService.sendDailyWeatherUpdates();
+  }
+}

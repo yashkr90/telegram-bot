@@ -8,6 +8,7 @@ import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { SubscriptionModule } from './subscription/subscription.module';
 
+
 // import 'dotenv/config';
 
 console.log(process.env.MONGO_URL);
@@ -38,6 +39,7 @@ console.log(process.env.MONGO_URL);
   ],
   providers: [
     AppService,
+    // TelegramService
     // SubscriptionService
   ],
 })

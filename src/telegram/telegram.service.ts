@@ -2,6 +2,7 @@ const TelegramBot = require('node-telegram-bot-api');
 import { Inject, Injectable } from '@nestjs/common';
 import { SubscriptionService } from 'src/subscription/subscription.service';
 import { getWeather } from './weather/weather';
+import { Cron } from '@nestjs/schedule';
 
 
 
@@ -93,5 +94,19 @@ export class TelegramService {
         );
       }
     });
+
+
+  }
+
+  @Cron('0 8 * * *') // Schedule the function to run at 8 AM every day
+  async sendDailyWeatherUpdates() {
+    const subscribers = await this.subscriptionService.getAllSubscribers();
+    for (const subscriber of subscribers) {
+      const subscriberId = subscriber._id;
+      const subscriberCity = subscriber.city;
+      const report = await getWeather(subscriberCity);
+      // const report = await this.weatherService.getWeather(subscriberCity);
+      this.bot.sendMessage(subscriberId, report);
+    }
   }
 }
